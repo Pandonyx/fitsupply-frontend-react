@@ -4,7 +4,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 import CssBaseline from "@mui/material/CssBaseline";
 import "./App.css";
 import { Navbar, Footer } from "./components/layout";
-import Home from "./index.jsx";
+import Landing from "./pages/Landing";
 
 // MUI Theme
 const theme = createTheme({
@@ -14,6 +14,9 @@ const theme = createTheme({
     },
     secondary: {
       main: "#7c3aed", // Purple
+    },
+    error: {
+      main: "#dc2626", // Red for cart badge
     },
     background: {
       default: "#f8fafc",
@@ -29,13 +32,13 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <div className='flex flex-col min-h-screen w-ful'>
+        <div className='flex flex-col min-h-screen w-full'>
           <Navbar />
-          <main className='flex-grow bg-gray-50'>
+          <main className='flex-grow'>
             <Routes>
               <Route
                 path='/'
-                element={<Home />}
+                element={<Landing />}
               />
             </Routes>
           </main>
