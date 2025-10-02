@@ -119,7 +119,9 @@ export const useProductsStore = create((set, get) => ({
     set({ isLoading: true, error: null });
     try {
       const response = await productsAPI.getAll(params);
-      const products = response.data.results || response.data;
+      const products = Array.isArray(response.data)
+        ? response.data
+        : response.data.results || [];
       set({
         products,
         filteredProducts: products,
@@ -130,6 +132,7 @@ export const useProductsStore = create((set, get) => ({
         error: error.response?.data?.detail || "Failed to fetch products",
         isLoading: false,
       });
+      console.error("Error fetching products:", error);
     }
   },
 

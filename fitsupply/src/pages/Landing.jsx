@@ -1,7 +1,20 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { CircularProgress } from "@mui/material";
+import { useProductsStore } from "../store";
+import { ProductCard } from "../components/common";
 
 function Landing() {
   const navigate = useNavigate();
+  const { products, isLoading, fetchProducts } = useProductsStore();
+
+  useEffect(() => {
+    // Fetch all products on mount
+    fetchProducts();
+  }, []);
+
+  // Filter featured products
+  const featuredProducts = products.filter((p) => p.is_featured).slice(0, 4);
 
   return (
     <div className='min-h-screen'>
@@ -31,6 +44,50 @@ function Landing() {
               onClick={() => navigate("/products")}
               className='w-full sm:w-auto px-8 py-4 bg-transparent text-white font-bold text-lg rounded-xl border-2 border-white hover:bg-white hover:text-blue-900 transition-all duration-300 transform hover:scale-105'>
               Browse Catalog
+            </button>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured Products Section */}
+      <section className='py-16 px-4 bg-white'>
+        <div className='max-w-7xl mx-auto'>
+          <div className='text-center mb-12'>
+            <h2 className='text-3xl md:text-4xl font-bold text-gray-900 mb-4'>
+              Featured Products
+            </h2>
+            <p className='text-lg text-gray-600'>
+              Discover our most popular supplements trusted by athletes
+              worldwide
+            </p>
+          </div>
+
+          {isLoading ? (
+            <div className='flex justify-center py-12'>
+              <CircularProgress />
+            </div>
+          ) : featuredProducts.length > 0 ? (
+            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6'>
+              {featuredProducts.map((product) => (
+                <ProductCard
+                  key={product.id}
+                  product={product}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className='text-center py-12'>
+              <p className='text-gray-600'>
+                No featured products available at the moment.
+              </p>
+            </div>
+          )}
+
+          <div className='text-center mt-12'>
+            <button
+              onClick={() => navigate("/products")}
+              className='px-8 py-3 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition-colors'>
+              View All Products
             </button>
           </div>
         </div>
