@@ -46,7 +46,7 @@ function ProductCard({ product }) {
   };
 
   const handleCardClick = () => {
-    navigate(`/products/${product.id}`);
+    navigate(`/products/${product.slug}`);
   };
 
   const handleCloseSnackbar = () => {

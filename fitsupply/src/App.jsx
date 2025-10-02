@@ -5,6 +5,8 @@ import CssBaseline from "@mui/material/CssBaseline";
 import "./App.css";
 import { Navbar, Footer } from "./components/layout";
 import Landing from "./pages/Landing";
+import Products from "./pages/products";
+import ProductDetail from "./pages/products/[slug]";
 
 // MUI Theme
 const theme = createTheme({
@@ -39,6 +41,14 @@ function App() {
               <Route
                 path='/'
                 element={<Landing />}
+              />
+              <Route
+                path='/products'
+                element={<Products />}
+              />
+              <Route
+                path='/products/:slug'
+                element={<ProductDetail />}
               />
             </Routes>
           </main>
