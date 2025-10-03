@@ -7,6 +7,8 @@ import { Navbar, Footer } from "./components/layout";
 import Landing from "./pages/Landing";
 import Products from "./pages/products";
 import ProductDetail from "./pages/products/[slug]";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
 
 // MUI Theme
 const theme = createTheme({
@@ -49,6 +51,14 @@ function App() {
               <Route
                 path='/products/:slug'
                 element={<ProductDetail />}
+              />
+              <Route
+                path='/login'
+                element={<Login />}
+              />
+              <Route
+                path='/register'
+                element={<Register />}
               />
             </Routes>
           </main>

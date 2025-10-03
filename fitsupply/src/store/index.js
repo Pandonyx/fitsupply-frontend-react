@@ -47,21 +47,36 @@ export const useAuthStore = create(
       register: async (userData) => {
         set({ isLoading: true, error: null });
         try {
-          await authAPI.register(userData);
+          const response = await authAPI.register(userData);
 
-          // Auto-login after registration
-          const loginResult = await get().login({
-            username: userData.username,
-            password: userData.password,
-          });
+          // Check if registration was successful
+          if (response.status === 201 || response.status === 200) {
+            // Auto-login after registration
+            const loginResult = await get().login({
+              username: userData.username,
+              password: userData.password,
+            });
 
-          return loginResult;
+            return loginResult;
+          }
+
+          return { success: false, error: "Registration failed" };
         } catch (error) {
+          const errorMessage =
+            error.response?.data?.detail ||
+            error.response?.data?.message ||
+            "Registration failed";
+
           set({
-            error: error.response?.data?.detail || "Registration failed",
+            error: errorMessage,
             isLoading: false,
           });
-          return { success: false, error: error.response?.data };
+
+          console.error("Registration error:", error.response?.data);
+          return {
+            success: false,
+            error: error.response?.data || errorMessage,
+          };
         }
       },
 
@@ -146,6 +161,21 @@ export const useProductsStore = create((set, get) => ({
         error: error.response?.data?.detail || "Failed to fetch product",
         isLoading: false,
       });
+      console.error("Error fetching product:", error);
+    }
+  },
+
+  fetchProductBySlug: async (slug) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await productsAPI.getBySlug(slug);
+      set({ currentProduct: response.data, isLoading: false });
+    } catch (error) {
+      set({
+        error: error.response?.data?.detail || "Failed to fetch product",
+        isLoading: false,
+      });
+      console.error("Error fetching product by slug:", error);
     }
   },
 
