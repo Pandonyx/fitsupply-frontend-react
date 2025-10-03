@@ -12,6 +12,8 @@ import Register from "./pages/auth/Register";
 import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
+import Profile from "./pages/Profile";
+
 // MUI Theme
 const theme = createTheme({
   palette: {
@@ -73,6 +75,10 @@ function App() {
               <Route
                 path='/order-success/:orderNumber'
                 element={<OrderSuccess />}
+              />
+              <Route
+                path='/profile'
+                element={<Profile />}
               />
             </Routes>
           </main>

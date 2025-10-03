@@ -74,7 +74,7 @@ function Navbar() {
                   onClose={handleUserMenuClose}>
                   <MenuItem
                     onClick={() => {
-                      navigate("/dashboard");
+                      navigate("/profile");
                       handleUserMenuClose();
                     }}>
                     Dashboard
