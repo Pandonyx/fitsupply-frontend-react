@@ -9,7 +9,9 @@ import Products from "./pages/products";
 import ProductDetail from "./pages/products/[slug]";
 import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
-
+import Cart from "./pages/Cart";
+import Checkout from "./pages/Checkout";
+import OrderSuccess from "./pages/OrderSuccess";
 // MUI Theme
 const theme = createTheme({
   palette: {
@@ -59,6 +61,18 @@ function App() {
               <Route
                 path='/register'
                 element={<Register />}
+              />
+              <Route
+                path='/cart'
+                element={<Cart />}
+              />
+              <Route
+                path='/checkout'
+                element={<Checkout />}
+              />
+              <Route
+                path='/order-success/:orderNumber'
+                element={<OrderSuccess />}
               />
             </Routes>
           </main>

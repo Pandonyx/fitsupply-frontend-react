@@ -376,10 +376,12 @@ export const useOrdersStore = create((set, get) => ({
       set({ currentOrder: response.data, isLoading: false });
       return { success: true, order: response.data };
     } catch (error) {
+      const errorMsg = error.response?.data?.detail || "Failed to create order";
       set({
-        error: error.response?.data?.detail || "Failed to create order",
+        error: errorMsg,
         isLoading: false,
       });
+      console.error("Order creation error:", error.response?.data);
       return { success: false, error: error.response?.data };
     }
   },
