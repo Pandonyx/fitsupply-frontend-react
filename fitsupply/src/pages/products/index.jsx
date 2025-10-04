@@ -34,6 +34,7 @@ function Products() {
   useEffect(() => {
     fetchProducts();
     fetchCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleSearch = (e) => {
@@ -80,11 +81,11 @@ function Products() {
   const hasActiveFilters = selectedCategory || searchQuery || sortBy;
 
   return (
-    <div className='min-h-screen bg-gray-50 py-8'>
-      <div className='max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+    <div className='min-h-screen py-8 bg-gray-50'>
+      <div className='px-4 mx-auto max-w-7xl sm:px-6 lg:px-8'>
         {/* Header */}
         <div className='mb-8'>
-          <h1 className='text-4xl font-bold text-gray-900 mb-2'>
+          <h1 className='mb-2 text-4xl font-bold text-gray-900'>
             Our Products
           </h1>
           <p className='text-lg text-gray-600'>
@@ -93,8 +94,8 @@ function Products() {
         </div>
 
         {/* Search and Filter Bar */}
-        <div className='bg-white rounded-lg shadow-sm p-4 mb-6'>
-          <div className='flex flex-col lg:flex-row gap-4'>
+        <div className='p-4 mb-6 bg-white rounded-lg shadow-sm'>
+          <div className='flex flex-col gap-4 lg:flex-row'>
             {/* Search */}
             <form
               onSubmit={handleSearch}
@@ -164,7 +165,7 @@ function Products() {
             {/* Toggle Filters Button (Mobile) */}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className='lg:hidden flex items-center justify-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700'>
+              className='flex items-center justify-center gap-2 px-4 py-2 text-white bg-blue-600 rounded-lg lg:hidden hover:bg-blue-700'>
               <FilterList />
               Filters
             </button>
@@ -172,7 +173,7 @@ function Products() {
 
           {/* Active Filters */}
           {hasActiveFilters && (
-            <div className='flex flex-wrap items-center gap-2 mt-4 pt-4 border-t'>
+            <div className='flex flex-wrap items-center gap-2 pt-4 mt-4 border-t'>
               <span className='text-sm text-gray-600'>Active filters:</span>
 
               {selectedCategory && (

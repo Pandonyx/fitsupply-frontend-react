@@ -13,6 +13,7 @@ import Cart from "./pages/Cart";
 import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import Profile from "./pages/Profile";
+import OrderDetail from "./pages/OrderDetail";
 
 // MUI Theme
 const theme = createTheme({
@@ -40,7 +41,7 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <div className='flex flex-col min-h-screen w-full'>
+        <div className='flex flex-col w-full min-h-screen'>
           <Navbar />
           <main className='flex-grow'>
             <Routes>
@@ -79,6 +80,10 @@ function App() {
               <Route
                 path='/profile'
                 element={<Profile />}
+              />
+              <Route
+                path='/orders/:id'
+                element={<OrderDetail />}
               />
             </Routes>
           </main>

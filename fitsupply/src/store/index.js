@@ -184,7 +184,7 @@ export const useProductsStore = create((set, get) => ({
     if (!categoryId) {
       set({ filteredProducts: products });
     } else {
-      const filtered = products.filter((p) => p.category === categoryId);
+      const filtered = products.filter((p) => p.category.id === categoryId);
       set({ filteredProducts: filtered });
     }
   },
