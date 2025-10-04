@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
@@ -156,8 +157,9 @@ function Checkout() {
       } else {
         setFormError("Failed to create order. Please try again.");
       }
-    } catch (error) {
+    } catch (err) {
       setFormError("An error occurred during checkout. Please try again.");
+      console.error("Checkout error:", err);
     } finally {
       setIsProcessing(false);
     }

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import {
@@ -26,7 +27,6 @@ export const useAuthStore = create(
           localStorage.setItem("access_token", access);
           localStorage.setItem("refresh_token", refresh);
 
-          // Fetch user profile after login
           const profileResponse = await authAPI.getProfile();
 
           set({
@@ -35,12 +35,12 @@ export const useAuthStore = create(
             isLoading: false,
           });
           return { success: true };
-        } catch (error) {
+        } catch (err) {
           set({
-            error: error.response?.data?.detail || "Login failed",
+            error: err.response?.data?.detail || "Login failed",
             isLoading: false,
           });
-          return { success: false, error: error.response?.data };
+          return { success: false, error: err.response?.data };
         }
       },
 
@@ -49,9 +49,7 @@ export const useAuthStore = create(
         try {
           const response = await authAPI.register(userData);
 
-          // Check if registration was successful
           if (response.status === 201 || response.status === 200) {
-            // Auto-login after registration
             const loginResult = await get().login({
               username: userData.username,
               password: userData.password,
@@ -61,10 +59,10 @@ export const useAuthStore = create(
           }
 
           return { success: false, error: "Registration failed" };
-        } catch (error) {
+        } catch (err) {
           const errorMessage =
-            error.response?.data?.detail ||
-            error.response?.data?.message ||
+            err.response?.data?.detail ||
+            err.response?.data?.message ||
             "Registration failed";
 
           set({
@@ -72,10 +70,10 @@ export const useAuthStore = create(
             isLoading: false,
           });
 
-          console.error("Registration error:", error.response?.data);
+          console.error("Registration error:", err.response?.data);
           return {
             success: false,
-            error: error.response?.data || errorMessage,
+            error: err.response?.data || errorMessage,
           };
         }
       },
@@ -90,7 +88,7 @@ export const useAuthStore = create(
         try {
           const response = await authAPI.getProfile();
           set({ user: response.data, isAuthenticated: true });
-        } catch (error) {
+        } catch (err) {
           get().logout();
         }
       },
@@ -101,9 +99,9 @@ export const useAuthStore = create(
           const response = await authAPI.updateProfile(data);
           set({ user: response.data, isLoading: false });
           return { success: true };
-        } catch (error) {
+        } catch (err) {
           set({
-            error: error.response?.data?.detail || "Update failed",
+            error: err.response?.data?.detail || "Update failed",
             isLoading: false,
           });
           return { success: false };
@@ -142,12 +140,12 @@ export const useProductsStore = create((set, get) => ({
         filteredProducts: products,
         isLoading: false,
       });
-    } catch (error) {
+    } catch (err) {
       set({
-        error: error.response?.data?.detail || "Failed to fetch products",
+        error: err.response?.data?.detail || "Failed to fetch products",
         isLoading: false,
       });
-      console.error("Error fetching products:", error);
+      console.error("Error fetching products:", err);
     }
   },
 
@@ -156,12 +154,12 @@ export const useProductsStore = create((set, get) => ({
     try {
       const response = await productsAPI.getById(id);
       set({ currentProduct: response.data, isLoading: false });
-    } catch (error) {
+    } catch (err) {
       set({
-        error: error.response?.data?.detail || "Failed to fetch product",
+        error: err.response?.data?.detail || "Failed to fetch product",
         isLoading: false,
       });
-      console.error("Error fetching product:", error);
+      console.error("Error fetching product:", err);
     }
   },
 
@@ -170,12 +168,12 @@ export const useProductsStore = create((set, get) => ({
     try {
       const response = await productsAPI.getBySlug(slug);
       set({ currentProduct: response.data, isLoading: false });
-    } catch (error) {
+    } catch (err) {
       set({
-        error: error.response?.data?.detail || "Failed to fetch product",
+        error: err.response?.data?.detail || "Failed to fetch product",
         isLoading: false,
       });
-      console.error("Error fetching product by slug:", error);
+      console.error("Error fetching product by slug:", err);
     }
   },
 
@@ -203,7 +201,7 @@ export const useProductsStore = create((set, get) => ({
         filteredProducts: response.data.results || response.data,
         isLoading: false,
       });
-    } catch (error) {
+    } catch (err) {
       set({ isLoading: false });
     }
   },
@@ -232,9 +230,9 @@ export const useCategoriesStore = create((set) => ({
         categories: response.data.results || response.data,
         isLoading: false,
       });
-    } catch (error) {
+    } catch (err) {
       set({
-        error: error.response?.data?.detail || "Failed to fetch categories",
+        error: err.response?.data?.detail || "Failed to fetch categories",
         isLoading: false,
       });
     }
@@ -257,9 +255,9 @@ export const useCartStore = create((set, get) => ({
         items: response.data.items || [],
         isLoading: false,
       });
-    } catch (error) {
+    } catch (err) {
       set({
-        error: error.response?.data?.detail || "Failed to fetch cart",
+        error: err.response?.data?.detail || "Failed to fetch cart",
         isLoading: false,
       });
     }
@@ -271,12 +269,12 @@ export const useCartStore = create((set, get) => ({
       await cartAPI.addItem(productId, quantity);
       await get().fetchCart();
       return { success: true };
-    } catch (error) {
+    } catch (err) {
       set({
-        error: error.response?.data?.detail || "Failed to add item",
+        error: err.response?.data?.detail || "Failed to add item",
         isLoading: false,
       });
-      return { success: false, error: error.response?.data };
+      return { success: false, error: err.response?.data };
     }
   },
 
@@ -290,7 +288,7 @@ export const useCartStore = create((set, get) => ({
       await cartAPI.updateItem(itemId, quantity);
       await get().fetchCart();
       return { success: true };
-    } catch (error) {
+    } catch (err) {
       set({ isLoading: false });
       return { success: false };
     }
@@ -302,7 +300,7 @@ export const useCartStore = create((set, get) => ({
       await cartAPI.removeItem(itemId);
       await get().fetchCart();
       return { success: true };
-    } catch (error) {
+    } catch (err) {
       set({ isLoading: false });
       return { success: false };
     }
@@ -314,7 +312,7 @@ export const useCartStore = create((set, get) => ({
       await cartAPI.clear();
       set({ cart: null, items: [], isLoading: false });
       return { success: true };
-    } catch (error) {
+    } catch (err) {
       set({ isLoading: false });
       return { success: false };
     }
@@ -326,7 +324,7 @@ export const useCartStore = create((set, get) => ({
   },
 
   getTotal: () => {
-    const { items } = get();
+    const { items } = useCartStore.getState();
     return items.reduce((sum, item) => {
       return sum + item.product.price * item.quantity;
     }, 0);
@@ -334,7 +332,7 @@ export const useCartStore = create((set, get) => ({
 }));
 
 // Orders Store
-export const useOrdersStore = create((set, get) => ({
+export const useOrdersStore = create((set) => ({
   orders: [],
   currentOrder: null,
   isLoading: false,
@@ -348,9 +346,9 @@ export const useOrdersStore = create((set, get) => ({
         orders: response.data.results || response.data,
         isLoading: false,
       });
-    } catch (error) {
+    } catch (err) {
       set({
-        error: error.response?.data?.detail || "Failed to fetch orders",
+        error: err.response?.data?.detail || "Failed to fetch orders",
         isLoading: false,
       });
     }
@@ -361,9 +359,9 @@ export const useOrdersStore = create((set, get) => ({
     try {
       const response = await ordersAPI.getById(id);
       set({ currentOrder: response.data, isLoading: false });
-    } catch (error) {
+    } catch (err) {
       set({
-        error: error.response?.data?.detail || "Failed to fetch order",
+        error: err.response?.data?.detail || "Failed to fetch order",
         isLoading: false,
       });
     }
@@ -375,14 +373,14 @@ export const useOrdersStore = create((set, get) => ({
       const response = await ordersAPI.create(orderData);
       set({ currentOrder: response.data, isLoading: false });
       return { success: true, order: response.data };
-    } catch (error) {
-      const errorMsg = error.response?.data?.detail || "Failed to create order";
+    } catch (err) {
+      const errorMsg = err.response?.data?.detail || "Failed to create order";
       set({
         error: errorMsg,
         isLoading: false,
       });
-      console.error("Order creation error:", error.response?.data);
-      return { success: false, error: error.response?.data };
+      console.error("Order creation error:", err.response?.data);
+      return { success: false, error: err.response?.data };
     }
   },
 }));

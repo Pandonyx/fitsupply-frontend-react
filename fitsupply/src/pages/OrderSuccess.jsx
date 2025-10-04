@@ -7,7 +7,7 @@ import { useOrdersStore } from "../store";
 function OrderSuccess() {
   const { orderNumber } = useParams();
   const navigate = useNavigate();
-  const { currentOrder, fetchOrderById } = useOrdersStore();
+  const { currentOrder } = useOrdersStore();
 
   useEffect(() => {
     if (orderNumber) {
@@ -189,7 +189,7 @@ function OrderSuccess() {
         {/* Action Buttons */}
         <div className='flex flex-col sm:flex-row gap-4'>
           <Button
-            onClick={() => navigate("/dashboard")}
+            onClick={() => navigate("/profile")}
             variant='contained'
             size='large'
             startIcon={<Receipt />}
