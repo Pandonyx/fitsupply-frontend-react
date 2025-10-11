@@ -17,6 +17,7 @@ import OrderDetail from "./pages/OrderDetail";
 import AdminDashboard from "./pages/admin";
 import ProductsManagement from "./pages/admin/products";
 import ProductForm from "./pages/admin/products/ProductForm";
+import OrdersManagement from "./pages/admin/OrdersManagement";
 
 // MUI Theme
 const theme = createTheme({
@@ -103,6 +104,10 @@ function App() {
               <Route
                 path='/admin/products/edit/:id'
                 element={<ProductForm />}
+              />
+              <Route
+                path='/admin/orders'
+                element={<OrdersManagement />}
               />
             </Routes>
           </main>

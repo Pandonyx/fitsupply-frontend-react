@@ -101,6 +101,7 @@ export const ordersAPI = {
   create: (orderData) => api.post("/orders/", orderData),
   getAll: () => api.get("/orders/"),
   getById: (id) => api.get(`/orders/${id}/`),
+  updateStatus: (id, status) => api.patch(`/orders/${id}/`, { status }),
 };
 
 export default api;
