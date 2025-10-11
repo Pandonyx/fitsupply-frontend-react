@@ -16,6 +16,12 @@ api.interceptors.request.use(
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }
+
+    // CRITICAL FIX: Remove Content-Type for FormData to let browser set it
+    if (config.data instanceof FormData) {
+      delete config.headers["Content-Type"];
+    }
+
     return config;
   },
   (error) => Promise.reject(error)
@@ -66,7 +72,11 @@ export const authAPI = {
 export const productsAPI = {
   getAll: (params) => api.get("/products/", { params }),
   getById: (id) => api.get(`/products/${id}/`),
+  getBySlug: (slug) => api.get(`/products/${slug}/`),
   search: (query) => api.get("/products/", { params: { search: query } }),
+  create: (productData) => api.post("/products/", productData),
+  update: (id, productData) => api.patch(`/products/${id}/`, productData),
+  delete: (id) => api.delete(`/products/${id}/`),
 };
 
 // Categories endpoints

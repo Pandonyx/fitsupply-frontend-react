@@ -14,6 +14,9 @@ import Checkout from "./pages/Checkout";
 import OrderSuccess from "./pages/OrderSuccess";
 import Profile from "./pages/Profile";
 import OrderDetail from "./pages/OrderDetail";
+import AdminDashboard from "./pages/admin";
+import ProductsManagement from "./pages/admin/products";
+import ProductForm from "./pages/admin/products/ProductForm";
 
 // MUI Theme
 const theme = createTheme({
@@ -84,6 +87,22 @@ function App() {
               <Route
                 path='/orders/:id'
                 element={<OrderDetail />}
+              />
+              <Route
+                path='/admin'
+                element={<AdminDashboard />}
+              />
+              <Route
+                path='/admin/products'
+                element={<ProductsManagement />}
+              />
+              <Route
+                path='/admin/products/new'
+                element={<ProductForm />}
+              />
+              <Route
+                path='/admin/products/edit/:id'
+                element={<ProductForm />}
               />
             </Routes>
           </main>
